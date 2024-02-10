@@ -19,6 +19,9 @@ export default function UserList () {
             })
             .then((response) => {
                 console.log(response)
+                if (response == null) {
+                    response = 'null'
+                }
                 setUser(response)
             })
             .catch(err => {
@@ -29,12 +32,12 @@ export default function UserList () {
     useEffect(() => {
         fetchUser()
     }, [])
-    
+
     return (
         <>
             <h1>Liste des utilisateurs</h1>
             <p>{user.map((user) => {
-                user.username
+                
             })}</p>
         </>
     )

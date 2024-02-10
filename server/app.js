@@ -23,3 +23,7 @@ app.get('/utilisateurs', (req, res) => {
         .then((utilisateurs) => res.json(utilisateurs))
         .catch((err) => res.json(err))
 })
+
+app.listen(3500, () => {
+    console.log('Serveur démarré sur le port 3500');
+});
