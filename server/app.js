@@ -32,18 +32,29 @@ app.get('/utilisateurs', (req, res) => {
         .catch((err) => res.json(err))
 })
 
-app.post('addUtilisateurs', async (req, res) => {
+app.post('/addutilisateurs', async (req, res) => {
     try {
         const user = req.body.user
-
+        console.log(user)
         if (user == null) {
             return res.status(400).json({ error: 'La propriété user est requise et ne peut pas être nulle.' });
         }
-        const newUser = await User.create({
-            ...user
-        })
-    } catch(error) {
 
+        const existingUser = await User.findOne({ where: { email: user.email}})
+        if (existingUser){
+            return res.status(400).json({ error: 'Cet email est déjà utilisé.' });
+        }
+
+        const newUser = await User.create({
+            ...user,
+            certified: false,
+            createdAt: new Date(),
+            updatedAt: new Date()
+        })
+        res.json({user: newUser})
+    } catch(error) {
+        console.error('Erreur lors de l\'ajout de la tâche :', error);
+        res.status(500).json({ error: 'Erreur serveur lors de l\'ajout de la tâche' });
     }
 })
 

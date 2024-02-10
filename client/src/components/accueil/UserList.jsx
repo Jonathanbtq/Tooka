@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react"
+import UserForm from "./UserForm"
 
 export default function UserList () {
     const [user, setUser] = useState([])
@@ -6,7 +7,6 @@ export default function UserList () {
 
     const handleAccueil = async () => {
         const response = await window.fetch('http://localhost:3500/accueil')
-        console.log(response)
         const json = await response.json()
         const msg = json.msg
 
@@ -47,7 +47,7 @@ export default function UserList () {
         <>
             <h1 onClick={handleAccueil}>Liste des utilisateurs</h1>
             <p>{msg}</p>
-            <p></p>
+            <UserForm />
         </>
     )
 }
