@@ -41,13 +41,21 @@ export default function UserList () {
 
     useEffect(() => {
         fetchUser()
+        console.log(user)
     }, [])
 
     return (
         <>
             <h1 onClick={handleAccueil}>Liste des utilisateurs</h1>
             <p>{msg}</p>
-            <UserForm />
+            {user.map((user) => (
+                <div key={user.id} className="">
+                    <p>{user.firstname}</p>
+                    <p>{user.lastname}</p>
+                    <p>{user.email}</p>
+                </div>
+            ))}
+            <UserForm setUser={setUser} />
         </>
     )
 }

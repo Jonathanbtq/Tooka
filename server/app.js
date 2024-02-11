@@ -20,6 +20,34 @@ app.use(cors({
 
 const User = user(sequelize, Sequelize)
 
+/**
+ * Sécurité et login
+ */
+app.post('/login', (req, res) => {
+    let login = req.body.email
+    let password = req.body.password
+    User.findOne({
+        where:{
+            [Sequelize.Op.or]: [
+                {email: login},
+                {username: login}
+            ],
+            password: password
+            }
+        })
+        .then((user) => {
+            if (user) {
+                res.status(200).json({message: 'Connexion réussi', user: user})
+            } else {
+                res.status(401).json({error: 'Indentifiant invalides'})
+            }
+        })
+        .catch((error) => {
+            console.error('Erreur lors de la recherche de l\'utilisateur')
+            res.status(500).json({error: 'Erreur serveur lors de la connexion'})
+        })
+})
+
 app.get('/accueil', (req, res) => {
     res.send({
         msg: 'Bienvenue'
@@ -35,7 +63,6 @@ app.get('/utilisateurs', (req, res) => {
 app.post('/addutilisateurs', async (req, res) => {
     try {
         const user = req.body.user
-        console.log(user)
         if (user == null) {
             return res.status(400).json({ error: 'La propriété user est requise et ne peut pas être nulle.' });
         }

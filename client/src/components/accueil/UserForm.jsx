@@ -1,6 +1,7 @@
 import { useState } from "react"
 
-export default function UserForm(){
+export default function UserForm({ setUser }){
+    const [formVisible, setFormVisible] = useState(false)
     const [formData, setFormData] = useState({
         email: '',
         password: '',
@@ -14,9 +15,15 @@ export default function UserForm(){
         const {name, value} = event.target
         setFormData({ ...formData, [name]: value})
     }
+    
+    const handleClickForm = () => {
+        setFormVisible(!formVisible)
+    }
 
     const handleClickUserCreate = (event) => {
         event.preventDefault()
+
+        setUser((prevUser) => [...prevUser, formData])
 
         fetch('http://localhost:3500/addutilisateurs', {
             method: 'POST',
@@ -37,6 +44,7 @@ export default function UserForm(){
                     response = 'null'
                 }
                 setUser(response)
+                // setUserList({...userList, response})
             })
             .catch(err => {
                 console.error(err)
@@ -46,64 +54,67 @@ export default function UserForm(){
     return (
         <>
             <h2>Création d'un utilisateur</h2>
-            <form onSubmit={handleClickUserCreate}>
-                <div className="">
-                    <label htmlFor="">email*</label>
-                    <input
-                    type="text"
-                    name="email"
-                    placeholder="Adresse Email"
-                    value={formData.email} 
-                    onChange={handleChange} 
-                    /> 
-                </div>
-                <div className="">
-                    <label htmlFor="">password*</label>
-                    <input
-                    type="password"
-                    name="password"
-                    placeholder="Mot De Passe"
-                    value={formData.password} 
-                    onChange={handleChange} /> 
-                </div>
-                <div className="">
-                    <label htmlFor="">Username</label>
-                    <input
-                    type="text"
-                    name="username"
-                    placeholder="Nom d'utilisateur"
-                    value={formData.username} 
-                    onChange={handleChange} /> 
-                </div>
-                <div className="">
-                    <label htmlFor="">firstname*</label>
-                    <input
-                    type="text"
-                    name="firstname"
-                    placeholder="Prénom"
-                    value={formData.firstname} 
-                    onChange={handleChange} /> 
-                </div>
-                <div className="">
-                    <label htmlFor="">lastname*</label>
-                    <input
-                    type="text"
-                    name="lastname"
-                    placeholder="Nom de famille"
-                    value={formData.lastname} 
-                    onChange={handleChange} />
-                </div>
-                <div className="">
-                    <label htmlFor="">birth_day</label>
-                    <input
-                    type="text"
-                    name="birth_day"
-                    placeholder="Date de naissance"
-                    value={formData.birth_day} 
-                    onChange={handleChange} />
-                </div>
-                <input type="submit" value="Créer l'utilisateur" />
-            </form>
+            <button onClick={handleClickForm}>Afficher le formulaire de création utilisateur</button>
+            {formVisible &&(
+                <form onSubmit={handleClickUserCreate}>
+                    <div className="">
+                        <label htmlFor="">email*</label>
+                        <input
+                        type="text"
+                        name="email"
+                        placeholder="Adresse Email"
+                        value={formData.email} 
+                        onChange={handleChange} 
+                        /> 
+                    </div>
+                    <div className="">
+                        <label htmlFor="">password*</label>
+                        <input
+                        type="password"
+                        name="password"
+                        placeholder="Mot De Passe"
+                        value={formData.password} 
+                        onChange={handleChange} /> 
+                    </div>
+                    <div className="">
+                        <label htmlFor="">Username</label>
+                        <input
+                        type="text"
+                        name="username"
+                        placeholder="Nom d'utilisateur"
+                        value={formData.username} 
+                        onChange={handleChange} /> 
+                    </div>
+                    <div className="">
+                        <label htmlFor="">firstname*</label>
+                        <input
+                        type="text"
+                        name="firstname"
+                        placeholder="Prénom"
+                        value={formData.firstname} 
+                        onChange={handleChange} /> 
+                    </div>
+                    <div className="">
+                        <label htmlFor="">lastname*</label>
+                        <input
+                        type="text"
+                        name="lastname"
+                        placeholder="Nom de famille"
+                        value={formData.lastname} 
+                        onChange={handleChange} />
+                    </div>
+                    <div className="">
+                        <label htmlFor="">birth_day</label>
+                        <input
+                        type="text"
+                        name="birth_day"
+                        placeholder="Date de naissance"
+                        value={formData.birth_day} 
+                        onChange={handleChange} />
+                    </div>
+                    <input type="submit" value="Créer l'utilisateur" />
+                </form>
+            )}
         </>
     )
 }
