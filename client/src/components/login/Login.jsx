@@ -1,16 +1,25 @@
 import { useState } from "react"
 
 export default function Login(){
-    const [login, setLogin] = useState('')
-    const [password, setPassword] = useState('')
     const [message, setMessage] = useState('')
+    const [credentials, setCredentials] = useState({
+        login: '',
+        password: ''
+    })
+
+    const handleChange = (e) => {
+        setCredentials({
+            ...credentials,
+            [e.target.name]: e.target.value
+        })
+    }
 
     const handleSubmit = (event) => {
         event.preventDefault()
 
         const loginData = {
-            email: login,
-            password: password
+            email: credentials.login,
+            password: credentials.password
         };
 
         console.log(loginData)
@@ -38,8 +47,8 @@ export default function Login(){
     return (
         <>
             <form action="POST" onSubmit={handleSubmit}>
-                <input type="text" name="login" value={login} onChange={e => setLogin(e.target.value)} />
-                <input type="password" name="password" value={password} onChange={e => setPassword(e.target.value)} />
+                <input type="text" name="login" value={credentials.login} onChange={handleChange} />
+                <input type="password" name="password" value={credentials.password} onChange={handleChange} />
                 <input type="submit" value="Connexion" />
             </form>
             {message &&
