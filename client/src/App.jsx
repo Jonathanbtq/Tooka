@@ -1,20 +1,17 @@
 import { useEffect, useState } from 'react';
-import UserList from './components/accueil/UserList'
-import Login from './components/login/Login'
-import Cookies from 'universal-cookie';
+import { BrowserRouter, Routes, Route, Link } from "react-router-dom";
+import Home from './pages/Home';
+import Login from './pages/Login';
 
 function App() {
-  const [cookieUser, setCookieUser] = useState('')
-
-  useEffect(() => {
-    let cookies = new Cookies('', { path: '/' })
-    let userSess = cookies.get('user')
-    setCookieUser(userSess)
-  }, [])
   return (
     <>
-      <Login />
-      <UserList userCookie={cookieUser}/>
+      <BrowserRouter>
+        <Routes>
+          <Route index element={<Home />} />
+          <Route path="/login" element={<Login />} />
+        </Routes>
+      </BrowserRouter>
     </>
   )
 }
