@@ -1,0 +1,30 @@
+.userlist_ctn{
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+}
+.userlist_map{
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    width: 95%;
+}
+.userlst_card{
+    display: flex;
+    flex-direction: column;
+    background-color: rgb(231, 231, 231);
+    margin: 0 20px 20px 20px;
+    padding: 10px;
+    border-radius: 5px;
+    width: 23%;
+}
+.userlst_card div{
+    display: flex;
+    flex-wrap: wrap;
+}
+.userlst_card div p{
+    margin-right: 10px;
+}
+.selectedUser{
+    border: 1px solid grey;
+}

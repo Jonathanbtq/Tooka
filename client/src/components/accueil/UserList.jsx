@@ -49,17 +49,25 @@ export default function UserList ({ userCookie }) {
 
     return (
         <>
-            <h2>Bonjour {userCookie.username}</h2>
-            <h1 onClick={handleAccueil}>Liste des utilisateurs</h1>
-            <p>{msg}</p>
-            {user.map((user) => (
-                <div key={user.id} className="">
-                    <p>{user.firstname}</p>
-                    <p>{user.lastname}</p>
-                    <p>{user.email}</p>
+            <div className="userlist_ctn">
+                <h2>Bonjour {userCookie.username}</h2>
+                <h1 onClick={handleAccueil}>Liste des utilisateurs</h1>
+                <p>{msg}</p>
+                <div className="userlist_map">
+                    {user.map((user) => (
+                        <div key={user.id} className={`userlst_card ${user.email === userCookie.email ? 'selectedUser' : ''}`}>
+                            <div className="">
+                                <p>{user.firstname}</p>
+                                <p>{user.lastname}</p>
+                            </div>
+                            <p>@ {user.email}</p>
+                        </div>
+                    ))}
                 </div>
-            ))}
-            <UserForm setUser={setUser} />
+                
+                <UserForm setUser={setUser} />
+            </div>
+            
         </>
     )
 }

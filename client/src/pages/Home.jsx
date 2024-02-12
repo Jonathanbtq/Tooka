@@ -5,6 +5,7 @@ import UserList from '../components/accueil/UserList'
 import Nav from '../components/nav/Nav'
 
 import '../assets/css/nav.css'
+import '../assets/css/UserList.css'
 
 function Home() {
     const [cookieUser, setCookieUser] = useState('')
