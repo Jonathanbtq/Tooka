@@ -1,8 +1,14 @@
 import { useEffect, useState } from "react"
 import UserForm from "./UserForm"
+import Cookies from 'universal-cookie';
 
-export default function UserList () {
+/**
+ * @param userCookie Le cookie contenant les données de l'utilisateur.
+ * @returns La liste des utilisateurs sous forme de composant React.
+ */
+export default function UserList ({ userCookie }) {
     const [user, setUser] = useState([])
+    const [userSession, setUserSession] = useState('')
     const [msg, setAccueil] = useState('Salut')
 
     const handleAccueil = async () => {
@@ -32,7 +38,6 @@ export default function UserList () {
                     response = 'null'
                 }
                 setUser(response)
-                console.log(user)
             })
             .catch(err => {
                 console.error(err)
@@ -41,11 +46,11 @@ export default function UserList () {
 
     useEffect(() => {
         fetchUser()
-        console.log(user)
     }, [])
 
     return (
         <>
+            <h2>Bonjour {userCookie.username}</h2>
             <h1 onClick={handleAccueil}>Liste des utilisateurs</h1>
             <p>{msg}</p>
             {user.map((user) => (

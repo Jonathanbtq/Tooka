@@ -1,4 +1,5 @@
 import { useState } from "react"
+import Cookies from 'universal-cookie';
 
 export default function Login(){
     const [message, setMessage] = useState('')
@@ -22,8 +23,6 @@ export default function Login(){
             password: credentials.password
         };
 
-        console.log(loginData)
-
         fetch('http://localhost:3500/login', {
             method: 'POST',
             mode: 'cors',
@@ -32,15 +31,23 @@ export default function Login(){
             },
             body: JSON.stringify(loginData)
         })
-            .then((response) => {
+            .then(response => {
                 if (response.ok) {
-                    setMessage('Connexion réussi')
+                    return response.json();
                 } else {
                     setMessage('Identifiants invalides')
                     throw new Error('Identifiants invalides');
                 }
-            }).catch((error) => {
-                console.error('Une erreur est survenue lors de la requête de connexion', error)
+            })
+            .then(data => {
+                // data contient l'objet JSON renvoyé par le serveur
+                const user = data.user;
+                const cookies = new Cookies();
+                cookies.set('user', user, { path: '/' });
+                setMessage('Connexion réussi')
+            })
+            .catch((error) => {
+            console.error('Une erreur est survenue lors de la requête de connexion', error)
             })
     }
 
