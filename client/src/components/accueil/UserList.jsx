@@ -8,7 +8,6 @@ import Cookies from 'universal-cookie';
  */
 export default function UserList ({ userCookie }) {
     const [user, setUser] = useState([])
-    const [userSession, setUserSession] = useState('')
     const [msg, setAccueil] = useState('Salut')
 
     const handleAccueil = async () => {
