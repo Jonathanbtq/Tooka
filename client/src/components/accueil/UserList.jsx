@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react"
 import UserForm from "./UserForm"
 import Cookies from 'universal-cookie';
+import UserDetails from "../user/UserDetails";
 
 /**
  * @param userCookie Le cookie contenant les données de l'utilisateur.
@@ -9,6 +10,8 @@ import Cookies from 'universal-cookie';
 export default function UserList ({ userCookie }) {
     const [user, setUser] = useState([])
     const [msg, setAccueil] = useState('Salut')
+    const [isVisibleUser, setIsVisibleUser] = useState(false)
+    const [userDetails, setUserDetails] = useState('')
 
     const handleAccueil = async () => {
         const response = await window.fetch('http://localhost:3500/accueil')
@@ -16,6 +19,11 @@ export default function UserList ({ userCookie }) {
         const msg = json.msg
 
         setAccueil(msg)
+    }
+
+    const handleUserClick = (userInfo) => {
+        setIsVisibleUser(!isVisibleUser);
+        setUserDetails(userInfo)
     }
 
     const fetchUser = () => {
@@ -55,7 +63,7 @@ export default function UserList ({ userCookie }) {
                 <p>{msg}</p>
                 <div className="userlist_map">
                     {user.map((user) => (
-                        <div key={user.id} className={`userlst_card ${user.email === userCookie.email ? 'selectedUser' : ''}`}>
+                        <div key={user.id} className={`userlst_card ${user.email === userCookie.email ? 'selectedUser' : ''}`} onClick={() => handleUserClick(user)}>
                             <div className="">
                                 <p>{user.firstname}</p>
                                 <p>{user.lastname}</p>
@@ -64,7 +72,9 @@ export default function UserList ({ userCookie }) {
                         </div>
                     ))}
                 </div>
-                
+                {isVisibleUser && (
+                    <UserDetails user={userDetails}/>
+                )}
                 <UserForm setUser={setUser} />
             </div>
             
