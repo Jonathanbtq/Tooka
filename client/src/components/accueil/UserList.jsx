@@ -2,6 +2,7 @@ import { useEffect, useState } from "react"
 import UserForm from "./UserForm"
 import Cookies from 'universal-cookie';
 import UserDetails from "../user/UserDetails";
+import { Link } from "react-router-dom";
 
 /**
  * @param userCookie Le cookie contenant les données de l'utilisateur.
@@ -65,7 +66,7 @@ export default function UserList ({ userCookie }) {
                     {user.map((user) => (
                         <div key={user.id} className={`userlst_card ${user.email === userCookie.email ? 'selectedUser' : ''}`} onClick={() => handleUserClick(user)}>
                             <div className="">
-                                <p>{user.firstname}</p>
+                                <p><Link to={"/profile/" + user.id}>{user.firstname}</Link></p>
                                 <p>{user.lastname}</p>
                             </div>
                             <p>@ {user.email}</p>

@@ -20,7 +20,9 @@ function Home() {
         <>
             <Nav />
             <Login />
-            <UserList userCookie={cookieUser}/>
+            {cookieUser &&
+                <UserList userCookie={cookieUser}/>
+            }
         </>
     )
 }

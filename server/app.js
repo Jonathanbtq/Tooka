@@ -60,6 +60,17 @@ app.get('/utilisateurs', (req, res) => {
         .catch((err) => res.json(err))
 })
 
+app.get('/user/:id', (req, res) => {
+    const id = req.params.id
+    User.findOne({
+        where:{
+            id: id
+            }
+        })
+        .then((user) => res.json(user))
+        .catch((err) => res.json(err))
+})
+
 app.post('/addutilisateurs', async (req, res) => {
     try {
         const user = req.body.user
