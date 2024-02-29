@@ -4,7 +4,6 @@ import { useParams } from "react-router-dom";
 const UserDetails = ({ user }) => {
     const {id} = useParams()
     const [userProfile, setUserProfile] = useState('')
-    console.log(id)
 
     const fetchUser = () => {
         fetch('http://localhost:3500/user/'+id, {

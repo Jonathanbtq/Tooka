@@ -4,6 +4,10 @@ const cors = require('cors')
 const bodyParser = require('body-parser')
 const Sequelize = require('sequelize')
 const sequelize = require('./db/db')
+const publication = require('./Models/Publication')
+const publicationLike = require('./Models/PublicationLike')
+const publicationCommentaire = require('./Models/PublicationCommentaire')
+const publicationTag = require('./Models/PublicationTag')
 require('dotenv').config()
 
 const app = express()
@@ -19,6 +23,10 @@ app.use(cors({
 // Pour origin vérifier l'url du serveur react
 
 const User = user(sequelize, Sequelize)
+const Publication = publication(sequelize, Sequelize)
+const PublicationLike = publicationLike(sequelize, Sequelize)
+const PublicationCommentaire = publicationCommentaire(sequelize, Sequelize)
+const PublicationTag = publicationTag(sequelize, Sequelize)
 
 /**
  * Sécurité et login
@@ -63,9 +71,7 @@ app.get('/utilisateurs', (req, res) => {
 app.get('/user/:id', (req, res) => {
     const id = req.params.id
     User.findOne({
-        where:{
-            id: id
-            }
+        where:{ id: id }
         })
         .then((user) => res.json(user))
         .catch((err) => res.json(err))
@@ -87,12 +93,57 @@ app.post('/addutilisateurs', async (req, res) => {
             ...user,
             certified: false,
             createdAt: new Date(),
-            updatedAt: new Date()
+            updatedAt: null
         })
         res.json({user: newUser})
     } catch(error) {
         console.error('Erreur lors de l\'ajout de la tâche :', error);
         res.status(500).json({ error: 'Erreur serveur lors de l\'ajout de la tâche' });
+    }
+})
+
+/**
+ * Publication
+ */
+app.post('/publicationcreate', (req, res) => {
+    try {
+        const publication = req.body
+        if (publication === null) {
+            return
+        }
+        console.log(publication)
+        const newPublication = Publication.create({
+            ...publication,
+            createdAt: new Date(),
+            updatedAt: null
+        })
+        res.json({publication: newPublication})
+    } catch(err) {
+        console.error(err)
+        res.status(500).json({error: 'Une erreur est survenue lors de la création de la publication'})
+    }
+})
+
+app.get('/publicationget', async (req, res) => {
+    try {
+        const publications = await Publication.findAll({
+            limit: 50,
+            include: [{
+                model: User,
+                as: 'fk_author'
+            }]
+        })
+        const publicationsWithAuthors = await Promise.all(publications.map(async publication => {
+            const user = User.findOne({where: {id: publication.author}})
+            return {
+                ...publication.toJSON(),
+                author: user.username
+            }
+        }))
+        res.json(publicationsWithAuthors)
+    } catch(err) {
+        console.error('Erreur lors de la récupération des publications :', err)
+        res.status(500).json({ message: 'Erreur lors de la récupération des publications.' })
     }
 })
 

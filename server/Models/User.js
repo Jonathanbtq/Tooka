@@ -1,5 +1,5 @@
 module.exports = (Sequelize, DataTypes) => {
-    return Sequelize.define('User', {
+    const User = Sequelize.define('User', {
         email: {
             type: DataTypes.STRING,
             allowNull: false,
@@ -37,4 +37,10 @@ module.exports = (Sequelize, DataTypes) => {
             allowNull: true,
         }
     })
+
+    User.associate = (models) => {
+        User.hasMany(models.Publication, { foreignKey: 'fk_author', as: 'publications' });
+    };
+
+    return User
 }

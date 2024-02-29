@@ -6,6 +6,8 @@ import Nav from '../components/nav/Nav'
 
 import '../assets/css/nav.css'
 import '../assets/css/UserList.css'
+import PublicationForm from '../components/accueil/publications/PublicationForm';
+import PublicationHome from '../components/accueil/publications/PublicationHome';
 
 function Home() {
     const [cookieUser, setCookieUser] = useState('')
@@ -21,8 +23,12 @@ function Home() {
             <Nav />
             <Login />
             {cookieUser &&
+                <PublicationForm userCookie={cookieUser}/>
+            }
+            {cookieUser &&
                 <UserList userCookie={cookieUser}/>
             }
+            <PublicationHome />
         </>
     )
 }
