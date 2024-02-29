@@ -36,8 +36,10 @@ export default function PublicationHome() {
             <div className="">
                 <h3>Nouvelles publications</h3>
                 {publications.map((publi) => {
-                    <p>{publi.text}</p>,
-                    <p>{publi.author}</p>
+                    <div key={publi.id}>
+                        <p>Texte : {publi.text}</p>
+                        <p>Author : {publi.fk_author}</p>
+                    </div>
                 })}
             </div>
         </>

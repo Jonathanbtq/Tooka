@@ -36,6 +36,8 @@ module.exports = (Sequelize, DataTypes) => {
             type: DataTypes.STRING,
             allowNull: true,
         },
+    }, {
+        tableName: 'users'
     })
 
     User.associate = (models) => {

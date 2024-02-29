@@ -1,5 +1,5 @@
 module.exports = (Sequelize, DataTypes) => {
-    const Publication = Sequelize.define('Publication', {
+    const Publication = Sequelize.define('Publications', {
         text: {
             type: DataTypes.STRING,
             allowNull: false,
@@ -16,10 +16,12 @@ module.exports = (Sequelize, DataTypes) => {
                 key: 'id'
             }
         }
+    }, {
+        tableName: 'publications'
     })
     
     Publication.associate = (models) => {
-        Publication.belongsTo(models.User, { foreignKey: 'fk_author', as: 'author' })
+        Publication.belongsTo(models.Users, { foreignKey: 'fk_author', as: 'author' })
     }
 
     return Publication

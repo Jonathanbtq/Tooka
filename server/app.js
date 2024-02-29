@@ -1,13 +1,13 @@
 const express = require('express')
-let user = require('./Models/User')
+let user = require('./Models/Users')
 const cors = require('cors')
 const bodyParser = require('body-parser')
 const Sequelize = require('sequelize')
 const sequelize = require('./db/db')
-const publication = require('./Models/Publication')
-const publicationLike = require('./Models/PublicationLike')
-const publicationCommentaire = require('./Models/PublicationCommentaire')
-const publicationTag = require('./Models/PublicationTag')
+const publication = require('./Models/Publications')
+const publicationLike = require('./Models/PublicationLikes')
+const publicationCommentaire = require('./Models/PublicationCommentaires')
+const publicationTag = require('./Models/PublicationTags')
 require('dotenv').config()
 
 const app = express()
@@ -114,6 +114,7 @@ app.post('/publicationcreate', (req, res) => {
         console.log(publication)
         const newPublication = Publication.create({
             ...publication,
+            fk_author: 4,
             createdAt: new Date(),
             updatedAt: null
         })
@@ -128,22 +129,22 @@ app.get('/publicationget', async (req, res) => {
     try {
         const publications = await Publication.findAll({
             limit: 50,
-            include: [{
-                model: User,
-                as: 'author'
-            }]
-        });
+        //     include: [{
+        //         model: User,
+        //         as: 'author'
+        //     }]
+        // });
 
-        const publicationsWithAuthors = await Promise.all(publications.map(async publication => {
-            const author = await publication.getAuthor(); // Utilisez la méthode générée par Sequelize
+        // const publicationsWithAuthors = await Promise.all(publications.map(async publication => {
+        //     const author = await publication.getAuthor(); // Utilisez la méthode générée par Sequelize
 
-            return {
-                ...publication.toJSON(),
-                author: author.username // Accédez au nom d'utilisateur de l'auteur
-            };
-        }));
-
-        res.json(publicationsWithAuthors);
+        //     return {
+        //         ...publications.toJSON(),
+        //         author: author.username // Accédez au nom d'utilisateur de l'auteur
+        //     };
+        // }));
+        })
+        res.json(publications);
     } catch(err) {
         console.error('Erreur lors de la récupération des publications :', err);
         res.status(500).json({ message: 'Erreur lors de la récupération des publications.' });
