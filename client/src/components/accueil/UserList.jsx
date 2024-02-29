@@ -46,6 +46,7 @@ export default function UserList ({ userCookie }) {
                     response = 'null'
                 }
                 setUser(response)
+                console.log(response)
             })
             .catch(err => {
                 console.error(err)
