@@ -130,22 +130,25 @@ app.get('/publicationget', async (req, res) => {
             limit: 50,
             include: [{
                 model: User,
-                as: 'fk_author'
+                as: 'author'
             }]
-        })
+        });
+
         const publicationsWithAuthors = await Promise.all(publications.map(async publication => {
-            const user = User.findOne({where: {id: publication.author}})
+            const author = await publication.getAuthor(); // Utilisez la méthode générée par Sequelize
+
             return {
                 ...publication.toJSON(),
-                author: user.username
-            }
-        }))
-        res.json(publicationsWithAuthors)
+                author: author.username // Accédez au nom d'utilisateur de l'auteur
+            };
+        }));
+
+        res.json(publicationsWithAuthors);
     } catch(err) {
-        console.error('Erreur lors de la récupération des publications :', err)
-        res.status(500).json({ message: 'Erreur lors de la récupération des publications.' })
+        console.error('Erreur lors de la récupération des publications :', err);
+        res.status(500).json({ message: 'Erreur lors de la récupération des publications.' });
     }
-})
+});
 
 // Synchronisez le modèle avec la base de données
 sequelize.sync().then(() => {

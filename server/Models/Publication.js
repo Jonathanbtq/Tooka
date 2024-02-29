@@ -11,6 +11,10 @@ module.exports = (Sequelize, DataTypes) => {
         fk_author: {
             type: DataTypes.INTEGER,
             allowNull: false,
+            references: {
+                model: 'User',
+                key: 'id'
+            }
         }
     })
     
