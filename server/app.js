@@ -111,7 +111,6 @@ app.post('/publicationcreate', (req, res) => {
         if (publication === null) {
             return
         }
-        console.log(publication)
         const newPublication = Publication.create({
             ...publication,
             fk_author: 4,

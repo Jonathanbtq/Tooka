@@ -11,7 +11,7 @@ export default function PublicationHome() {
                 'Content-Type': 'application/json'
             },
         })
-            .then(response => {
+            .then((response) => {
                 if (response.ok) {
                     return response.json();
                 } else {
@@ -20,7 +20,6 @@ export default function PublicationHome() {
             })
             .then(publications => {
                 setPublications(publications)
-                console.log(publications)
             })
             .catch(err => {
                 console.error('Une erreur est survenue' + err)
@@ -35,12 +34,16 @@ export default function PublicationHome() {
         <>
             <div className="">
                 <h3>Nouvelles publications</h3>
-                {publications.map((publi) => {
-                    <div key={publi.id}>
-                        <p>Texte : {publi.text}</p>
-                        <p>Author : {publi.fk_author}</p>
-                    </div>
-                })}
+                <div className="idx_public_ctn">
+                    {publications.map((publi) => {
+                        return (
+                            <div className="publi_idx_card" key={publi.id}>
+                                <p>Texte : {publi.text}</p>
+                                <p>Author : {publi.fk_author}</p>
+                            </div>
+                        );
+                    })}
+                </div>
             </div>
         </>
     )

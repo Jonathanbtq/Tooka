@@ -40,6 +40,10 @@ module.exports = (Sequelize, DataTypes) => {
         tableName: 'users'
     })
 
+    User.getName = () => {
+
+    }
+    
     User.associate = (models) => {
         User.hasMany(models.Publication, { foreignKey: 'fk_author', as: 'publications' });
     };

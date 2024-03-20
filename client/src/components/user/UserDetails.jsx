@@ -46,11 +46,15 @@ const UserDetails = ({ user }) => {
     
     return (
         <div className="user-details">
-          <h2>Détails de l'utilisateur</h2>
+            {userProfile.username && (
+                <h2>{userProfile.username}</h2>
+            )}
+            {userProfile.description && (
+                <p>{userProfile.description}</p>
+            )}
           <p>Prénom: {userProfile.firstname}</p>
           <p>Nom: {userProfile.lastname}</p>
           <p>Email: {userProfile.email}</p>
-          {/* Ajoutez d'autres détails de l'utilisateur au besoin */}
         </div>
     );
 }

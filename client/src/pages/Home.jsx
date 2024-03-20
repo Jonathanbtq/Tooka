@@ -6,6 +6,7 @@ import Nav from '../components/nav/Nav'
 
 import '../assets/css/nav.css'
 import '../assets/css/UserList.css'
+import '../assets/css/PublicationHome.css'
 import PublicationForm from '../components/accueil/publications/PublicationForm';
 import PublicationHome from '../components/accueil/publications/PublicationHome';
 
