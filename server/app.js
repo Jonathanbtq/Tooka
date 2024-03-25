@@ -8,6 +8,8 @@ const publication = require('./Models/Publications')
 const publicationLike = require('./Models/PublicationLikes')
 const publicationCommentaire = require('./Models/PublicationCommentaires')
 const publicationTag = require('./Models/PublicationTags')
+const friendRequest = require('./Models/FriendRequests')
+const friend = require('./Models/Friends')
 require('dotenv').config()
 
 const app = express()
@@ -27,6 +29,8 @@ const Publication = publication(sequelize, Sequelize)
 const PublicationLike = publicationLike(sequelize, Sequelize)
 const PublicationCommentaire = publicationCommentaire(sequelize, Sequelize)
 const PublicationTag = publicationTag(sequelize, Sequelize)
+const FriendRequests = friendRequest(sequelize, Sequelize)
+const Friends = friend(sequelize, Sequelize)
 
 /**
  * Sécurité et login

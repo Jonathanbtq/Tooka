@@ -1,5 +1,7 @@
 import { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
+import PublicationForm from "../accueil/publications/PublicationForm";
+import PublicationByUser from "./PublicationByUser";
 
 const UserDetails = ({ user }) => {
     const [userProfile, setUserProfile] = useState('')
@@ -46,15 +48,23 @@ const UserDetails = ({ user }) => {
     
     return (
         <div className="user-details">
-            {userProfile.username && (
-                <h2>{userProfile.username}</h2>
-            )}
-            {userProfile.description && (
-                <p>{userProfile.description}</p>
-            )}
-          <p>Prénom: {userProfile.firstname}</p>
-          <p>Nom: {userProfile.lastname}</p>
-          <p>Email: {userProfile.email}</p>
+            <div className="user_prof_leftside">
+                {userProfile.username && (
+                    <h2>{userProfile.username}</h2>
+                )}
+                {userProfile.description && (
+                    <p>{userProfile.description}</p>
+                )}
+            <p>{userProfile.firstname + ' ' + userProfile.lastname}</p>
+            </div>
+            <div className="user_prof_rgtside">
+                <div className="user_prof_rgt_head">
+                    {PublicationForm}
+                    <div className="usr_prf_rgt_ctn">
+                        {PublicationByUser}
+                    </div>
+                </div>
+            </div>
         </div>
     );
 }
