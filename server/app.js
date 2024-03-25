@@ -1,5 +1,5 @@
 const express = require('express')
-let user = require('./Models/Users')
+const user = require('./Models/Users')
 const cors = require('cors')
 const bodyParser = require('body-parser')
 const Sequelize = require('sequelize')
@@ -132,11 +132,11 @@ app.get('/publicationget', async (req, res) => {
     try {
         const publications = await Publication.findAll({
             limit: 50,
-        //     include: [{
-        //         model: User,
-        //         as: 'author'
-        //     }]
-        // });
+            // include: [{
+            //     model: User,
+            //     required: true
+            // }]
+        });
 
         // const publicationsWithAuthors = await Promise.all(publications.map(async publication => {
         //     const author = await publication.getAuthor(); // Utilisez la méthode générée par Sequelize
@@ -146,7 +146,7 @@ app.get('/publicationget', async (req, res) => {
         //         author: author.username // Accédez au nom d'utilisateur de l'auteur
         //     };
         // }));
-        })
+        // })
         res.json(publications);
     } catch(err) {
         console.error('Erreur lors de la récupération des publications :', err);

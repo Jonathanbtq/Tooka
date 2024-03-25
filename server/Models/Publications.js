@@ -8,21 +8,12 @@ module.exports = (Sequelize, DataTypes) => {
             type: DataTypes.STRING,
             allowNull: true,
         },
-        fk_author: {
-            type: DataTypes.INTEGER,
-            allowNull: false,
-            references: {
-                model: 'User',
-                key: 'id'
-            }
-        }
-    }, {
-        tableName: 'publications'
+        
     })
     
     Publication.associate = (models) => {
-        Publication.belongsTo(models.Users, { foreignKey: 'fk_author', as: 'author' })
-    }
+        Publication.belongsTo(models.User, { foreignKey: 'fk_author', as: 'author' });
+    };
 
     return Publication
 }

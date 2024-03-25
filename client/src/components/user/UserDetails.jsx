@@ -47,7 +47,7 @@ const UserDetails = ({ user }) => {
     }
     
     return (
-        <div className="user-details">
+        <div className="user_details">
             <div className="user_prof_leftside">
                 {userProfile.username && (
                     <h2>{userProfile.username}</h2>
