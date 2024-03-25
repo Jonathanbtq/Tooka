@@ -59,9 +59,9 @@ const UserDetails = ({ user }) => {
             </div>
             <div className="user_prof_rgtside">
                 <div className="user_prof_rgt_head">
-                    {PublicationForm}
+                    {<PublicationForm />}
                     <div className="usr_prf_rgt_ctn">
-                        {PublicationByUser}
+                        {<PublicationByUser />}
                     </div>
                 </div>
             </div>
